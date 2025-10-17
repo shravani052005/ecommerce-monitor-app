@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecommerce-monitor
+  labels:
+    app: ecommerce-monitor
+    version: "2.1.0"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ecommerce-monitor
+  template:
+    metadata:
+      labels:
+        app: ecommerce-monitor
+        version: "2.1.0"
+    spec:
+      containers:
+      - name: ecommerce-container
+        image: <your-dockerhub-username>/ecommerce-monitor:latest
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: ecommerce-monitor-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ecommerce-monitor
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50
