@@ -5,12 +5,12 @@ pipeline {
         KUBE_CONFIG = "/var/lib/jenkins/.kube/config" // Adjust if needed
     }
 
-    stages {
-        stage('Checkout Code') {
-            steps {
-                git 'https://github.com/shravani052005/ecommerce-monitor-app.git'
-            }
-        }
+    stage('Checkout Code') {
+    steps {
+        git branch: 'main', url: 'https://github.com/shravani052005/ecommerce-monitor-app.git'
+    }
+}
+
 
         stage('Build Docker Image') {
             steps {
