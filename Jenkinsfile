@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        DOCKER_IMAGE = "your-dockerhub-username/ecommerce-monitor"
+        DOCKER_IMAGE = "2203128/ecommerce-monitor"
         KUBE_CONFIG = "/var/lib/jenkins/.kube/config" // Adjust if needed
     }
 
