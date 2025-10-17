@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/shravani052005/ecommerce-monitor.git'
+                git branch: 'main', url: 'https://github.com/shravani052005/ecommerce-monitor-app.git'
             }
         }
 
